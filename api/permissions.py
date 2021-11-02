@@ -14,13 +14,15 @@ class FilePermissions(permissions.BasePermission):
             return request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return (
+                obj.access == 'public' or
+                request.user.is_authenticated and
+                request.user == obj.author
+            )
 
         if request.method in ('PATCH', 'DELETE'):
             return (
-                    request.user.is_authenticated and
-                    request.user == obj.author
+                request.user.is_authenticated and
+                request.user == obj.author
             )
-
-
-class DownloadPermission(permissions.BasePermission):
-    pass

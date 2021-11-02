@@ -34,8 +34,10 @@ class File(models.Model):
         blank=False,
         null=False,
         upload_to=upload_to,
-        verbose_name='File'
+        verbose_name='File',
+        unique=True
     )
+
     download_count = models.IntegerField(
         validators=[MinValueValidator(0)],
         blank=False,

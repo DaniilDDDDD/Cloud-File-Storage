@@ -45,7 +45,7 @@ class FileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = File
-        fields = ('access',)
+        fields = ('access', 'id')
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
