@@ -45,9 +45,13 @@ class FileViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
-        queryset = queryset.filter(
-            Q(access='public') | Q(author=request.user)
-        )
+        if request.user.is_authenticated:
+            queryset = queryset.filter(
+                Q(access='public') | Q(author=request.user)
+            )
+        else:
+            queryset = queryset.filter(access='public')
+
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -61,6 +65,7 @@ class FileViewSet(viewsets.ModelViewSet):
         detail=True,
         url_path='link',
         permission_classes=[FilePermissions],
+        url_name='link'
     )
     def file_link(self, request, id):
         file = self.get_object()

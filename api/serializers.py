@@ -35,7 +35,7 @@ class FileCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = File
-        fields = ('access', 'file')
+        fields = ('id', 'access', 'file')
 
 
 class FileUpdateSerializer(serializers.ModelSerializer):
